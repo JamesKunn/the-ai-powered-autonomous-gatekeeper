@@ -3,75 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Lead Agent - Contact</title>
+    <title>Work With Me | AI Automation Agency</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background: #f4f7f6; }
-        form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
-        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: 0.3s; }
-        button:disabled { background: #ccc; cursor: not-allowed; }
-        #status { margin-top: 15px; text-align: center; font-size: 14px; display: none; }
+        body { background-color: #0f172a; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body>
+<body class="text-slate-200 min-h-screen flex items-center justify-center p-6">
 
-<form id="leadForm">
-    <h2>Book a Consultation</h2>
-    <input type="text" name="name" id="name" placeholder="Full Name" required>
-    <input type="email" name="email" id="email" placeholder="Email Address" required>
-    <textarea name="message" id="message" rows="4" placeholder="How can I help you?" required></textarea>
-    
-    <button type="submit" id="submitBtn">Submit Request</button>
-    <div id="status"></div>
-</form>
+    <div class="max-w-md w-full glass p-8 rounded-2xl shadow-2xl fade-in">
+         <div class="mb-8 text-center">
+                <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-600/20 border border-blue-500/30 mb-4 shadow-inner">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path>
+                        <path d="M12 12L2.1 12.1"></path>
+                        <path d="M22 12 A10 10 0 0 1 12 22"></path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                </div>
+                
+                <h1 class="text-3xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent italic tracking-tight">
+                    The Gatekeeper
+                </h1>
+                <p class="text-slate-400 mt-2 text-sm font-medium">AI Autonomous Lead Qualification</p>
+            </div>
+        <form id="leadForm" class="space-y-5">
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Full Name</label>
+                <input type="text" id="name" required placeholder="John Doe" 
+                    class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-white">
+            </div>
 
-<script>
-    const form = document.getElementById('leadForm');
-    const btn = document.getElementById('submitBtn');
-    const status = document.getElementById('status');
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Email Address</label>
+                <input type="email" id="email" required placeholder="john@company.com" 
+                    class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-white">
+            </div>
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        // 1. Loading State
-        btn.disabled = true;
-        btn.innerText = "AI is analyzing...";
-        status.style.display = "block";
-        status.innerText = "Connecting to agent...";
-        status.style.color = "#555";
+            <div>
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Project Details</label>
+                <textarea id="message" required rows="4" placeholder="How can I help you?" 
+                    class="w-full bg-slate-800/50 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all text-white"></textarea>
+            </div>
 
-        // 2. Collect Data
-        const formData = {
-            name: document.getElementById('name').value,
-            email: document.getElementById('email').value,
-            message: document.getElementById('message').value
-        };
+            <button type="submit" id="submitBtn"
+                class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 rounded-lg shadow-lg transform transition active:scale-95 flex justify-center items-center">
+                <span>Submit to AI Agent</span>
+            </button>
+        </form>
 
-        try {
-            // 3. Send to Zapier
-            // We use mode: 'no-cors' because Zapier webhooks are "fire and forget"
-            await fetch('https://hooks.zapier.com/hooks/catch/26397280/uesn8ky/', {
-                method: 'POST',
-                mode: 'no-cors', 
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
+        <div id="status" class="mt-6 text-center text-sm hidden py-2 rounded-lg"></div>
+    </div>
 
-            // 4. Success State
-            status.innerText = "✅ Success! Check your email for an invite.";
-            status.style.color = "green";
-            btn.innerText = "Message Sent";
-            form.reset();
+    <script>
+        document.getElementById('leadForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn');
+            const status = document.getElementById('status');
+            const form = document.getElementById('leadForm');
+            
+            // 1. Enter Loading State
+            btn.disabled = true;
+            btn.innerHTML = `<svg class="animate-spin h-5 w-5 text-white" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`;
 
-        } catch (error) {
-            // 5. Error State
-            status.innerText = "❌ Something went wrong. Try again.";
-            status.style.color = "red";
-            btn.disabled = false;
-            btn.innerText = "Submit Request";
-        }
-    });
-</script>
+            const data = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                message: document.getElementById('message').value
+            };
 
+            try {
+                // REPLACE THIS WITH YOUR ZAPIER WEBHOOK URL
+                await fetch('https://hooks.zapier.com/hooks/catch/26397280/uesn8ky/', {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    body: JSON.stringify(data)
+                });
+
+                // 2. Success Feedback
+                status.classList.remove('hidden');
+                status.innerHTML = "✅ Message received! Our AI is sorting your request...";
+                status.className = "mt-6 text-center text-sm text-emerald-400 bg-emerald-400/10 py-2 rounded-lg border border-emerald-400/20 fade-in";
+                
+                // 3. The "Soft Refresh" - Reset form without page reload
+                form.reset();
+
+                // 4. Hide status after 5 seconds to clean up the UI
+                setTimeout(() => {
+                    status.classList.add('hidden');
+                }, 5000);
+
+            } catch (err) {
+                status.classList.remove('hidden');
+                status.innerHTML = "❌ Connection error. Please try again.";
+                status.className = "mt-6 text-center text-sm text-red-400 bg-red-400/10 py-2 rounded-lg border border-red-400/20";
+            } finally {
+                // 5. Reset Button
+                btn.disabled = false;
+                btn.innerHTML = "Submit to AI Agent";
+            }
+        });
+    </script>
 </body>
 </html>
