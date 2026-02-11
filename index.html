@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Lead Agent - Contact</title>
+    <style>
+        body { font-family: sans-serif; display: flex; justify-content: center; padding: 50px; background: #f4f7f6; }
+        form { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); width: 100%; max-width: 400px; }
+        input, textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: 0.3s; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
+        #status { margin-top: 15px; text-align: center; font-size: 14px; display: none; }
+    </style>
+</head>
+<body>
+
+<form id="leadForm">
+    <h2>Book a Consultation</h2>
+    <input type="text" name="name" id="name" placeholder="Full Name" required>
+    <input type="email" name="email" id="email" placeholder="Email Address" required>
+    <textarea name="message" id="message" rows="4" placeholder="How can I help you?" required></textarea>
+    
+    <button type="submit" id="submitBtn">Submit Request</button>
+    <div id="status"></div>
+</form>
+
+<script>
+    const form = document.getElementById('leadForm');
+    const btn = document.getElementById('submitBtn');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        // 1. Loading State
+        btn.disabled = true;
+        btn.innerText = "AI is analyzing...";
+        status.style.display = "block";
+        status.innerText = "Connecting to agent...";
+        status.style.color = "#555";
+
+        // 2. Collect Data
+        const formData = {
+            name: document.getElementById('name').value,
+            email: document.getElementById('email').value,
+            message: document.getElementById('message').value
+        };
+
+        try {
+            // 3. Send to Zapier
+            // We use mode: 'no-cors' because Zapier webhooks are "fire and forget"
+            await fetch('https://hooks.zapier.com/hooks/catch/26397280/uesn8ky/', {
+                method: 'POST',
+                mode: 'no-cors', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+
+            // 4. Success State
+            status.innerText = "✅ Success! Check your email for an invite.";
+            status.style.color = "green";
+            btn.innerText = "Message Sent";
+            form.reset();
+
+        } catch (error) {
+            // 5. Error State
+            status.innerText = "❌ Something went wrong. Try again.";
+            status.style.color = "red";
+            btn.disabled = false;
+            btn.innerText = "Submit Request";
+        }
+    });
+</script>
+
+</body>
+</html>
