@@ -1,9 +1,9 @@
 {
-    "env": {
-        "ANTROPHIC_AUTH_TOKEN": "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",
-        "ANTROPHIC_BASE_URL": "minimax/minimax-m2.5:free",
-        "ANTROPHIC_DEFAULT_HAIKU_MODEL": "minimax/minimax-m2.5:free",
-        "ANTROPHIC_DEFAULT_OPUS_MODEL": "minimax/minimax-m2.5:free",
-        "ANTROPHIC_DEFAULT_SONNET_MODEL": "minimax/minimax-m2.5:free"
-    }
+  "env": {
+    "ANTHROPIC_BASE_URL": "https://openrouter.ai/api",
+    "ANTHROPIC_AUTH_TOKEN": "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",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "nvidia/nemotron-3-super-120b-a12b:free",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "nvidia/nemotron-3-super-120b-a12b:free",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "nvidia/nemotron-3-super-120b-a12b:free"
+  }
 }
